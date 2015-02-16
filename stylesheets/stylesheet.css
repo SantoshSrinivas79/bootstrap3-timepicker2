@@ -179,16 +179,15 @@ code {
 }
 
 pre {
-  padding: 20px;
+  padding: 10px;
   overflow: auto;
-  color: #f2f2f2;
+  color: #303030;
   text-shadow: none;
-  background: #303030;
+  font-family: mono;
 }
 pre code {
   padding: 0;
-  color: #f2f2f2;
-  background-color: #303030;
+  color: #303030;
   border: none;
 }
 
@@ -235,6 +234,10 @@ form {
   padding: 20px;
   background: #f2f2f2;
 
+}
+
+table.options-table td{
+  text-align: left;
 }
 
 
