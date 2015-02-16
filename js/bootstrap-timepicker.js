@@ -268,16 +268,16 @@
            : '') +
          '</tr>'+
          '<tr>'+
-           '<td>'+ hourTemplate +'</td> '+
+           '<td><span>'+ hourTemplate +'</span></td> '+
            '<td class="separator">:</td>'+
-           '<td>'+ minuteTemplate +'</td> '+
+           '<td><span>'+ minuteTemplate +'</span></td> '+
            (this.showSeconds ?
             '<td class="separator">:</td>'+
-            '<td>'+ secondTemplate +'</td>'
+            '<td><span>'+ secondTemplate +'</span></td>'
            : '') +
            (this.showMeridian ?
             '<td class="separator">&nbsp;</td>'+
-            '<td>'+ meridianTemplate +'</td>'
+            '<td><span>'+ meridianTemplate +'</span></td>'
            : '') +
          '</tr>'+
          '<tr>'+
@@ -297,17 +297,21 @@
 
       switch(this.template) {
       case 'modal':
-        template = '<div class="bootstrap-timepicker-widget modal hide fade in" data-backdrop="'+ (this.modalBackdrop ? 'true' : 'false') +'">'+
-          '<div class="modal-header">'+
-            '<a href="#" class="close" data-dismiss="modal">×</a>'+
-            '<h3>Pick a Time</h3>'+
-          '</div>'+
-          '<div class="modal-content">'+
-            templateContent +
-          '</div>'+
-          '<div class="modal-footer">'+
-            '<a href="#" class="btn btn-primary" data-dismiss="modal">OK</a>'+
-          '</div>'+
+        template = '<div class="bootstrap-timepicker-widget modal fade" data-backdrop="'+ (this.modalBackdrop ? 'true' : 'false') +'">'+
+          '<div class="modal-dialog">' +
+            '<div class="modal-content">' +
+              '<div class="modal-header">'+
+                '<a href="#" class="close" data-dismiss="modal">×</a>'+
+                '<h3>Pick a Time</h3>'+
+              '</div>'+
+              '<div class="modal-body">'+
+                templateContent +
+              '</div>'+
+              '<div class="modal-footer">'+
+                '<a href="#" class="btn btn-primary" data-dismiss="modal">OK</a>'+
+              '</div>'+
+            '</div>'+
+          '</div>' +
         '</div>';
         break;
       case 'dropdown':
@@ -611,14 +615,27 @@
       if (this.isInline) {
         return;
       }
-      var widgetWidth = this.$widget.outerWidth(), widgetHeight = this.$widget.outerHeight(), visualPadding = 10, windowWidth =
-        $(window).width(), windowHeight = $(window).height(), scrollTop = $(window).scrollTop();
+
+      if (this.template === 'modal'){
+        return ;
+      }
+
+      var widgetWidth = this.$widget.outerWidth(); 
+      var widgetHeight = this.$widget.outerHeight();
+      var visualPadding = 10;
+      var windowWidth = $(window).width();
+      var windowHeight = $(window).height();
+      var scrollTop = $(window).scrollTop();
 
       var zIndex = parseInt(this.$element.parents().filter(function() {}).first().css('z-index'), 10) + 10;
       var offset = this.component ? this.component.parent().offset() : this.$element.offset();
       var height = this.component ? this.component.outerHeight(true) : this.$element.outerHeight(false);
       var width = this.component ? this.component.outerWidth(true) : this.$element.outerWidth(false);
       var left = offset.left, top = offset.top;
+
+      console.log(height);
+      console.log(windowHeight);
+      console.log(widgetHeight);
 
       this.$widget.removeClass('timepicker-orient-top timepicker-orient-bottom timepicker-orient-right timepicker-orient-left');
 
@@ -878,6 +895,9 @@
       });
 
       this.place();
+
+      //this.$widget.popover();
+
       if (this.disableFocus) {
         this.$element.blur();
       }
